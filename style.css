@@ -1,0 +1,591 @@
+/* Basis für die ganze Seite */
+:root {
+    --primary-color: #6c63ff;
+    --secondary-color: #ff6584;
+    --background-color: #0a0c1b;
+    --text-color: #e6e6e6;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(0, 0, 0, 0.2);
+    --section-padding: 100px 0;
+}
+/* Reset und Grundregeln */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* der halbtransparente Glas-Look */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 30px var(--shadow);
+    padding: 30px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px var(--shadow);
+}
+
+/* Hintergrund Deko*/
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow:hidden;
+}
+
+
+
+.blur-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+}
+
+.circle-1 {
+    top: -100px;
+    left: -100px;
+    width: 500px;
+    height: 500px;
+    background: rgba(108, 99, 255, 0.2);
+}
+
+.circle-2 {
+    bottom: -100px;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: rgba(255, 101, 132, 0.15);
+}
+
+/* Header Styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    background-color: rgba(10, 12, 27, 0.8);
+    border-bottom: 1px solid var(--card-border);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 40px;
+}
+
+.nav-links a {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.nav-links a:hover, .nav-links a:focus {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(108,99,255,0.15);
+    border-color: var(--primary-color);
+}
+/*für aktiven Link */
+.nav-links a.active {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 14px rgba(108,99,255,0.2);
+}
+/* gegen "unter den Header scrollen */
+section { scroll-margin-top: 90px; }
+
+.nav-links a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    border-radius: 1px;
+    transition: width 0.3s;
+}
+
+.nav-links a:hover::after, .nav-links a:focus::after {
+    width: 70%;
+}
+/* JavaScrip ergänzung */
+header.scrolled {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hamburger für Mobile */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: var(--text-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(10, 12, 27, 0.95);
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: clip-path 0.4s ease;
+        border-bottom: 1px solid var(--card-border);
+    }
+    .nav-links.active {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .nav-links li {
+        margin: 15px 0;
+    }
+}
+
+
+
+/* Home Section */
+.home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px; /* damit Header nicht drüber liegt */
+}
+
+.home .glass-card {
+    width: 100%;
+    padding: 60px 40px;
+}
+
+.home h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.home h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #a0a0a0;
+}
+.about-text h4 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #a0a0a0;
+    font-style: italic;
+    }
+.home p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+/* Zitat */
+.intro-quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #a0a0a0;
+    text-align: center;
+    margin-top: 30px;
+}
+.quote-author {
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Call-to-Action Buttons */
+.cta-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+/* Button Styles ( Allgemein, für Home und überall sonst */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn:hover {
+    background-color: #5a52e0;
+    transform: translateY(-2px);
+}
+.btn.secondary {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn.secondary:hover {
+    background-color: rgba(108, 99, 255, 0.1);
+}
+
+/* About Section */
+.about-content {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-image {
+    flex: 0 0 300px; /* 300px breit, wächst nicht */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Bild + Rahmen anpassen */
+.about-image .image-placeholder {
+    height: 300px;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 30%;
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+}
+.about h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #a0a0a0;
+}
+
+.about h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Details unter dem Bild */
+.about-text {
+    flex: 1;
+}
+.about-text p{
+    margin-bottom: 15px;
+}
+.skills {
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+.scientist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+
+}
+.skill {
+    background-color: rgba(108, 99, 255, 0.2);
+    color: var(--primary-color);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid rgba(108, 99, 255, 0.3);
+}
+
+/* exakt 3 pro Reihe auf Desktop, darunter 2/1 */
+.projects-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+
+
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Karten konsistent hochziehen */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Bildbereich: festes Seitenverhältnis + sauberes Zuschneiden */
+.project-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;     /* quadratisch; gern 4/3 oder 16/9 wählen */
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* füllt den Rahmen, schneidet überstehendes weg */
+
+  display: block;
+}
+
+/* Textbereich wächst, Buttons kleben unten */
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+  flex: 1;                 /* füllt Resthöhe */
+}
+
+.project-details .vote-container {
+  margin-top: auto;        /* drückt Votes an das Kartenende */
+}
+
+
+.project-details p {
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+.project-links {
+    display: flex;
+    gap: 10px;
+}
+
+/* Kontakt Section
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 10px;
+    max-width: 1400px;
+    width: flex;
+}*/
+
+.contact-info h3, .contact-form h3 {
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+.contact-info,
+.contact-form {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+
+}
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.info-item span {
+    font-size: 20px;
+    color: var(--primary-color);
+    width: 30px;
+    margin-right: 10px;
+    display: inline-block;
+    text-align: center;
+    width: flex;
+}
+
+.info-item a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.info-item a:hover {
+    color: var(--primary-color);
+}
+
+.form-soup {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+.form-soup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 550;
+}
+.form-soup textarea {
+    width: 100%;
+    padding: 7px 10px;
+    background-color: rgba(100,100,100, 0.5);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+/* Kommentarbereich In Projekten */
+.form-soup input: focus,
+.form-soup textarea: focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 0px;
+
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+/* Kontakt Form Bereich anpassen*/
+.contact-form {
+    padding: 40px;
+}
+.contact-form h3 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+.contact-form .form-group input,
+.contact-form .form-group textarea {
+    font-size: 17px; /* größere Schrift */
+    padding: 15px 18px; /* mehr Innenabstand */
+}
+.contact-form button {
+    font-size: 17px;
+    padding: 14px 28px;
+}
+
+/* Votes */
+.vote-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.vote-count {
+  min-width: 2ch;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+.vote-container .upvote,
+.vote-container .downvote {
+  line-height: 1;
+  padding: 8px 12px;
+}
+
+/* visueller Hint bei positiv/negativ */
+.vote-positive .vote-count { color: #49d17d; }
+.vote-negative .vote-count { color: #ff6584; }
+
+
+
+
+
+
